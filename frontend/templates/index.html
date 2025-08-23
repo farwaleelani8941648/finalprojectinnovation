@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- ===== Section d'en-tête ===== -->
+<section class="hero-section">
+    <h1>Portail des circulaires</h1>
+    <p>Consultez, recherchez et classez les circulaires éducatives grâce à l'intelligence artificielle.</p>
+</section>
+
+<!-- ===== Catégories principales et sous-catégories ===== -->
+{% for main, subs in all_circulars.items() %}
+    <section class="category-section">
+        <h2 class="category-title">{{ main.replace('_', ' ') }}</h2>
+        <div class="subcategory-vertical">
+            {% for sub, circulars in subs.items() %}
+                <a href="{{ url_for('view_category', main=main, sub=sub) }}" class="subcategory-card-vertical">
+                    <div class="subcategory-image-container">
+                        <img src="{{ url_for('static', filename='images/' + sub + '.png') }}" alt="Image de {{ sub.replace('_', ' ') }}">
+                    </div>
+                    <div class="subcategory-name">{{ sub.replace('_', ' ') }}</div>
+
+                    {% if main == "Student_Affairs" %}
+                        <p class="subcategory-description">
+                            {% if sub == "Student_Support_Services" %}
+                                Informations sur la santé scolaire et projets d’éducation aux médias favorisant le bien-être, l’esprit critique et la prévention.
+                            {% elif sub == "Enrollment_Procedures" %}
+                                Instructions complètes pour l’enregistrement numérique, la rentrée scolaire, l’intégration d’élèves à besoins spécifiques et les règles légales d’inscription.
+                            {% elif sub == "Extracurricular_Activities" %}
+                                Cadre réglementaire pour organiser des activités artistiques, de remédiation et d’inclusion au service du développement des élèves.
+                            {% elif sub == "Disciplinary_Measures" %}
+                                Règles précises sur les exclusions, la lutte contre le harcèlement, et le rôle des conseils dans la gestion disciplinaire des écoles.
+                            {% endif %}
+                        </p>
+
+                    {% elif main == "Staff_and_Personnel" %}
+                        <p class="subcategory-description">
+                            {% if sub == "Staff_Regulations" %}
+                                Règles actualisées sur la rémunération différée, les congés, et les procédures disciplinaires pour tous les statuts de personnel.
+                            {% elif sub == "Recruitment_and_Appointments" %}
+                                Appels à candidatures pour les postes temporaires ou permanents dans tous les niveaux d’enseignement, avec procédures 100 % numériques.
+                            {% elif sub == "Professional_Development" %}
+                                Formations et ateliers de montée en compétence pour le personnel éducatif et administratif, dans le cadre des réformes récentes.
+                            {% elif sub == "Performance_Evaluations" %}
+                                Modalités d’évaluation pour les enseignants et agents en fonction d’intégration, de promotion ou de statut protégé.
+                            {% endif %}
+                        </p>
+
+                    {% elif main == "Legal_and_Compliance" %}
+                        <p class="subcategory-description">
+                            {% if sub == "Data_Protection_and_GDPR" %}
+                                Obligations RGPD pour les écoles : outils numériques, rôles des DPO, ateliers pratiques et conformité des conseils de participation.
+                            {% elif sub == "Equity_and_Inclusion" %}
+                                Cadre pour la prévention du harcèlement, la communication inclusive, et la formation obligatoire à la diversité dans l'enseignement.
+                            {% elif sub == "Regulatory_Compliance" %}
+                                Directives légales sur le recrutement, les fonctions dans l'enseignement artistique, et les mises à jour réglementaires.
+                            {% elif sub == "Reporting_obligations" %}
+                                Procédures de certification, suivi administratif du personnel, et rapports annuels exigés dans tous les réseaux scolaires.
+                            {% endif %}
+                        </p>
+
+                    {% elif main == "Education_Policies" %}
+                        <p class="subcategory-description">
+                            {% if sub == "Educational_Reforms" %}
+                                Mise en œuvre du tronc commun et réformes structurelles : nouvelles normes, accompagnement personnalisé et procédures transitoires.
+                            {% elif sub == "Curriculum_Development" %}
+                                Adaptation des programmes scolaires : tronc commun, inclusion, numérique, langues et réformes des horaires pour tous les niveaux.
+                            {% elif sub == "Assessments_and_Evaluations" %}
+                                Organisation des évaluations externes non certificatives dans l’enseignement ordinaire et spécialisé pour l’année scolaire à venir.
+                            {% elif sub == "Academic_Calendar" %}
+                                Calendriers administratifs officiels pour l’enseignement des adultes et la promotion sociale : dates clés, congés et conformité réglementaire.
+                            {% endif %}
+                        </p>
+
+                    {% elif main == "Infrastructure_and_Resources" %}
+                        <p class="subcategory-description">
+                            {% if sub == "Digital_Learning_Platforms" %}
+                                Outils numériques, formations et subventions pour accompagner l’enseignement et les projets innovants dans les écoles WBE.
+                            {% elif sub == "Facility_Management" %}
+                                Financements exceptionnels, postes de coordination et modernisation des systèmes IT pour la gestion des bâtiments scolaires.
+                            {% elif sub == "Health_and_Safety_Measures" %}
+                                Normes de sécurité, hygiène, bien-être et santé intégrées aux programmes scolaires et aux infrastructures éducatives.
+                            {% elif sub == "Transportation_Services" %}
+                                Procédures de comptage des élèves, financement du transport scolaire et intégration des élèves à besoins spécifiques.
+                            {% endif %}
+                        </p>
+
+                    {% else %}
+                        <p class="subcategory-description">
+                            Courte description pour {{ sub.replace('_', ' ') }} (à personnaliser ultérieurement).
+                        </p>
+                    {% endif %}
+
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+{% endfor %}
+
+{% if message %}
+    <div class="message">{{ message }}</div>
+{% endif %}
+
+{% endblock %}

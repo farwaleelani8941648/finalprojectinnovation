@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Upload a Circular for Classification</h2>
+
+<form action="{{ url_for('classification') }}" method="POST" enctype="multipart/form-data">
+    <input type="file" name="pdf" required>
+    <input type="submit" value="Classify">
+</form>
+
+{% if message %}
+    <div class="message">{{ message }}</div>
+{% endif %}
+
+{% if result %}
+    <div class="horizontal-card-container">
+
+        {% if not result['existing'] %}
+            <div class="horizontal-card">
+                <p><strong>Main Category:</strong> {{ result['main_category'].replace('_', ' ') }}</p>
+                <p><strong>Subcategory:</strong> {{ result['predicted_subcategory'].replace('_', ' ') }}</p>
+                <p><strong>Confidence:</strong> {{ result['confidence'] | round(2) }}</p>
+                {% if result['circular_number'] %}
+                    <p><strong>Circular #:</strong> {{ result['circular_number'] }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if result['matches'] %}
+            {% for match in result['matches'] %}
+                <div class="horizontal-card">
+                    <p><strong>{{ match['filename'] }}</strong></p>
+                    <p>{{ match['main_category'].replace('_', ' ') }} > {{ match['subcategory'].replace('_', ' ') }}</p>
+                    <p>{{ match['content'][:200] }}...</p>
+                    <a href="/../circulars_admin/{{ match['main_category'] }}/{{ match['subcategory'] }}/{{ match['filename'] }}" download>📥 Download</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endif %}
+
+{% endblock %}

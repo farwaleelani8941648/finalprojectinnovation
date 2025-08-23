@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+flask
+pandas
+scikit-learn
+sentence-transformers
+faiss-cpu
+spacy
+PyMuPDF
+pdfplumber
+requests
+python-multipart

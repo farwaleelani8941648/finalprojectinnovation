@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>{{ sub.replace('_', ' ') }} Circulars</h2>
+
+{% if circulars %}
+    <div class="horizontal-card-container">
+        {% for c in circulars %}
+            <div class="horizontal-card">
+                <p><strong>{{ c['filename'] }}</strong></p>
+                <p><small>{{ c['summary'] }}</small></p>
+                <p>
+                    <a href="{{ c['path'] }}" download>Download PDF</a>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="message">No circulars found in this category.</div>
+{% endif %}
+
+{% endblock %}
